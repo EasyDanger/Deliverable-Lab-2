@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Lab1_2 {
@@ -29,6 +30,10 @@ public class Lab1_2 {
 //Variables to aid formatting dates to be read by program.		
 	static String firstDateString;
 	static String secDateString;
+	
+//Variables to help control flow. Moved after last minute Try catch addition. 	
+	static String firstRight;
+	static String secRight;
 
 	public static void main(String args[]) {
 
@@ -69,7 +74,7 @@ public class Lab1_2 {
 	public static void dateOne() { // This allows the user to begin inputing dates. Multiple potential calls to this method exist within this method for looping purposes in the event of invalid input.
 		System.out.println("Okay. We're going to start by having you enter in the month of the first date. You can enter the number of the month, or the name:");
 		firstMonth = read.next(); // Accepts month of first date
-
+try {
 		System.out.println("Now, can you give us the date (day of the month):");
 		firstDate = read.nextInt(); // Accepts day of first date
 
@@ -96,7 +101,7 @@ public class Lab1_2 {
 		if ((((firstYear % 100 == 0) && (firstYear % 400 != 0)) || (firstYear % 4 != 0))
 				&& (firstMonth.equals("February") || firstMonth.equals("2")) && (firstDate > 28)) {
 			System.out.println(
-					"Nice try. But there are no leap days in the year you chose. We're going back to the top. Would you kindly enter a real February date this time?");
+					"Nice try. But there is no leap day in the year you chose. We're going back to the top. Would you kindly enter a real February date this time?");
 			dateOne();
 		} else if ((lengthYear > 4) || (lengthYear < 4)) {//Else if statement restricts years to 4 digits.
 			System.out.println(
@@ -115,7 +120,7 @@ public class Lab1_2 {
 //Allows user to purposefully loop back in case of a mistaken date. 
 		System.out.println("Okay. Just to make sure we've understood you correctly, the date you've entered is "
 				+ firstMonth + " " + firstDate + ", " + firstYear + ". Is that correct? ('y'/'n')");
-		String firstRight = read.next(); //Variable will ultimately determine whether the program progresses to the second date inputs.
+		firstRight = read.next(); //Variable will ultimately determine whether the program progresses to the second date inputs.
 
 		switch (firstMonth) { // This switch assigns each months string to a string format readable by the formatter.
 		case "January":
@@ -194,6 +199,9 @@ public class Lab1_2 {
 			firstRight = "n";
 			break;
 		}
+	} catch (InputMismatchException firstDate) {//Last minute catch to defend against non integers in day input.
+	firstRight = "n";
+	}
 //This switch is how the earlier if statements with empty else statements probably should have been. 
 		switch (firstRight) { // this switch simply confirms that the date was input correctly.
 		case "y":
@@ -201,7 +209,7 @@ public class Lab1_2 {
 			break;
 		default:
 			System.out.println(
-					"Somthing went wrong, sorry about that. For safety, let's start from the top. Remember to put in a real month name or number. Please don't include leading zeros. And only use the number for dates (e.g. '1,' not '1st.'"); //Consider a method to allow '1st,' '2nd," etc.
+					"Somthing went wrong, sorry about that. For safety, let's start from the top. Remember to put in a real month name or number. Please don't include leading zeros. And only use the number for dates (e.g. '1,' not '1st.')"); //Consider a method to allow '1st,' '2nd," etc.
 			dateOne(); // returns user to start of first date entry
 			break;
 		}
@@ -211,6 +219,7 @@ public class Lab1_2 {
 		System.out.println("Okay. So, now we need you to give us that second starting with the month:");
 		secMonth = read.next(); // Accepts month of second date
 		System.out.println("Now, can you give us the date (day of the month):");
+		try {
 		secDate = read.nextInt(); // Accepts day of second date
 
 		if (secDate > 31) {
@@ -233,7 +242,7 @@ public class Lab1_2 {
 		if (((((secYear % 100 == 0) && (secYear % 400 != 0)) || (secYear % 4 != 0))
 				&& (secMonth.equals("February") || secMonth.equals("2"))) && (secDate > 28)) {
 			System.out.println(
-					"Nice try. But there are no leap days in the year you chose. We're going back to redo this second date. Would you kindly enter a real February date this time?");
+					"Nice try. But there is no leap day in the year you chose. We're going back to redo this second date. Would you kindly enter a real February date this time?");
 			dateTwo();
 		} else if ((lengthYear > 4) || (lengthYear < 4)) {
 			System.out.println(
@@ -253,7 +262,7 @@ public class Lab1_2 {
 		System.out
 				.println("Okay. Just to make sure we've understood you correctly, the date you've entered this time is "
 						+ secMonth + " " + secDate + ", " + secYear + ". Is that correct? ('y'/'n')");
-		String secRight = read.next();
+		secRight = read.next();
 
 		switch (secMonth) {
 		case "January":
@@ -332,7 +341,9 @@ public class Lab1_2 {
 			secRight = "n";
 			break;
 		}
-
+	} catch (InputMismatchException secDate) {//Last minute catch to defend against non integers in day input.
+		secRight = "n";
+		}
 		switch (secRight) { // this switch simply confirms that the date was input correctly.
 		case "y":
 			allTheMath(); // moves us to where all the math is going to be performed and the answers
