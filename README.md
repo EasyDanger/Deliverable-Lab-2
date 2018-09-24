@@ -8,7 +8,7 @@ The actual .java file is in the SRC folder.
 
 I tried to be as thorough as possible, so I welcome you to throw whatever challenges you have at this code. I believe it’s water tight, but other people can always come up with things I hadn’t thought of.
 
-The code should be able to handle any input without crashing and burning. 
+The code should be able to accept any input without falling apart. Tested against non-integer inputs and out of range numbers.
 
 Feel free to contact me or comment on any bugs or peculiarities. 
 
